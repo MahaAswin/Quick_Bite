@@ -1,4 +1,4 @@
-package com.example.QuickBite.user.entity;
+package com.example.QuickBite.enums;
 
 public class OrderStatus {
     public enum orderStatus{

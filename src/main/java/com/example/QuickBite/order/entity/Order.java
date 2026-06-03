@@ -1,6 +1,6 @@
 package com.example.QuickBite.order.entity;
 
-import com.example.QuickBite.user.entity.OrderStatus;
+import com.example.QuickBite.enums.OrderStatus;
 import com.example.QuickBite.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
