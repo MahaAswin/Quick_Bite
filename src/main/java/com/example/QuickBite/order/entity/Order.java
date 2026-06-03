@@ -18,11 +18,12 @@ import java.time.LocalDateTime;
 @Table(name="orders")
 public class Order{
 
+    @Id
     private Long id;
     private String tokenNumber;
     private Double totalAmount;
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus orderStatus;
     private LocalDateTime orderTime;
     @ManyToOne
     @JoinColumn(name="user_id")

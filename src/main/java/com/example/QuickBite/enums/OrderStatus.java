@@ -1,12 +1,11 @@
 package com.example.QuickBite.enums;
 
-public class OrderStatus {
-    public enum orderStatus{
-        PENDING,
-        CONFIRMED,
-        PREPARING,
-        OUT_FOR_DELIVERY,
-        DELIVERED,
-        CANCELLED
-    }
+public enum OrderStatus {
+
+    PENDING,
+    CONFIRMED,
+    PREPARING,
+    OUT_FOR_DELIVERY,
+    DELIVERED,
+    CANCELLED
 }
