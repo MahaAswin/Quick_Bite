@@ -40,9 +40,4 @@ public class AuthController {
         Boolean valid= jwtService.isTokenValid(token,"maha@gmail.com");
         return String.valueOf(valid);
     }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello";
-    }
 }
