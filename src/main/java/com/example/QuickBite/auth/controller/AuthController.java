@@ -3,12 +3,10 @@ package com.example.QuickBite.auth.controller;
 import com.example.QuickBite.auth.dto.RegisterRequest;
 import com.example.QuickBite.auth.dto.loginRequest;
 import com.example.QuickBite.auth.service.AuthService;
+import com.example.QuickBite.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(
@@ -31,5 +31,18 @@ public class AuthController {
             @RequestBody loginRequest request){
 
         return authService.login(request);
+    }
+
+    @PostMapping("test")
+    public String test(){
+        String token= jwtService.generateToken("maha@gmail.com");
+        System.out.println(token);
+        Boolean valid= jwtService.isTokenValid(token,"maha@gmail.com");
+        return String.valueOf(valid);
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello";
     }
 }

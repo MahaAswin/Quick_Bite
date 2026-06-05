@@ -3,6 +3,7 @@ package com.example.QuickBite.auth.service;
 import com.example.QuickBite.auth.dto.loginRequest;
 import com.example.QuickBite.auth.dto.RegisterRequest;
 import com.example.QuickBite.enums.Roles;
+import com.example.QuickBite.security.jwt.JwtService;
 import com.example.QuickBite.user.entity.User;
 import com.example.QuickBite.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.Role;
+import java.sql.SQLOutput;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +19,7 @@ public class AuthServiceImp implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public String register(RegisterRequest request) {
@@ -52,6 +55,7 @@ public class AuthServiceImp implements AuthService {
             throw new RuntimeException("Invalid Password");
         }
 
-        return "Login Successful";
+        String token= jwtService.generateToken(user.getEmail());
+        return "Login Successful "+"Token: "+token;
     }
 }
