@@ -29,7 +29,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(
             @RequestBody loginRequest request){
-
+        System.out.println("REGISTER API HIT");
         return authService.login(request);
     }
 

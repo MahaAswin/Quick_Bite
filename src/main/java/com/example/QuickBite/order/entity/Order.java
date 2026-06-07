@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 public class Order{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tokenNumber;
     private Double totalAmount;
@@ -27,5 +28,5 @@ public class Order{
     private LocalDateTime orderTime;
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User user_id;
+    private User user;
 }
