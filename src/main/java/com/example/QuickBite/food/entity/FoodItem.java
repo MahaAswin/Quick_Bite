@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class FoodItem {
+public class FoodItem
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
