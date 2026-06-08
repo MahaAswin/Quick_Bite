@@ -28,18 +28,19 @@ public class FoodController {
         return ResponseEntity.ok(foodService.getFoodById(id));
     }
 
-    @PostMapping
+
+    @PostMapping("/admin")
     public ResponseEntity<FoodItems> addFood(@Valid @RequestBody FoodItems foodItem) {
         FoodItems savedFoodItem = foodService.addFood(foodItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFoodItem);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}")
     public ResponseEntity<FoodItems> updateFood(@PathVariable Long id, @Valid @RequestBody FoodItems foodItem) {
         return ResponseEntity.ok(foodService.updateFood(id, foodItem));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<String> deleteFood(@PathVariable Long id) {
         foodService.deleteFood(id);
         return ResponseEntity.ok("Food item deleted successfully");
@@ -55,7 +56,7 @@ public class FoodController {
         return ResponseEntity.ok(foodService.getFoodsByCategory(category));
     }
 
-    @PutMapping("/{id}/stock")
+    @PutMapping("/admin/{id}/stock")
     public ResponseEntity<FoodItems> updateStock(
             @PathVariable Long id,
             @RequestParam(required = false) Integer quantity,
