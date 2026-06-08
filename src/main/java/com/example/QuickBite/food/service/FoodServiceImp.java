@@ -11,11 +11,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class FoodServiceImp implements FoodService {
+public class FoodServiceImp {
 
     private final FoodRepository foodRepository;
 
-    @Override
     public FoodItems addFood(FoodItems foodItem) {
         if (foodItem == null) {
             throw new IllegalArgumentException("Food item details cannot be null");
@@ -24,7 +23,6 @@ public class FoodServiceImp implements FoodService {
         return foodRepository.save(foodItem);
     }
 
-    @Override
     public FoodItems updateFood(Long id, FoodItems foodItem) {
         FoodItems existingFood = foodRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Food item not found with id: " + id));
@@ -40,39 +38,33 @@ public class FoodServiceImp implements FoodService {
         return foodRepository.save(existingFood);
     }
 
-    @Override
     public void deleteFood(Long id) {
         FoodItems existingFood = foodRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Food item not found with id: " + id));
         foodRepository.delete(existingFood);
     }
 
-    @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public FoodItems getFoodById(Long id) {
         return foodRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Food item not found with id: " + id));
     }
 
-    @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<FoodItems> getAllFoods() {
         return foodRepository.findAll();
     }
 
-    @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<FoodItems> searchFood(String name) {
         return foodRepository.findByNameContainingIgnoreCase(name);
     }
 
-    @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<FoodItems> getFoodsByCategory(String category) {
         return foodRepository.findByCategoryIgnoreCase(category);
     }
 
-    @Override
     public FoodItems updateStock(Long id, Integer quantity) {
         FoodItems existingFood = foodRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Food item not found with id: " + id));

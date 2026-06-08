@@ -2,7 +2,7 @@ package com.example.QuickBite.food.controller;
 
 import com.example.QuickBite.food.dto.StockUpdateRequest;
 import com.example.QuickBite.food.entity.FoodItems;
-import com.example.QuickBite.food.service.FoodService;
+import com.example.QuickBite.food.service.FoodServiceImp;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FoodController {
 
-    private final FoodService foodService;
+    private final FoodServiceImp foodService;
 
     @GetMapping
     public ResponseEntity<List<FoodItems>> getAllFoods() {

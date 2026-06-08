@@ -1,7 +1,7 @@
 package com.example.QuickBite.food.controller;
 
 import com.example.QuickBite.food.entity.FoodItems;
-import com.example.QuickBite.food.service.FoodService;
+import com.example.QuickBite.food.service.FoodServiceImp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class FoodControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private FoodService foodService;
+    private FoodServiceImp foodService;
 
     @InjectMocks
     private FoodController foodController;
