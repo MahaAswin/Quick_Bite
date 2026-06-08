@@ -2,6 +2,7 @@ package com.example.QuickBite.dashboard.service;
 
 import com.example.QuickBite.dashboard.dto.AdminDashboardResponse;
 import com.example.QuickBite.dashboard.dto.ProfileResponse;
+import com.example.QuickBite.dashboard.dto.UpdateProfileRequest;
 import com.example.QuickBite.dashboard.dto.UserDashboardResponse;
 import com.example.QuickBite.enums.Roles;
 import com.example.QuickBite.user.entity.User;
@@ -57,5 +58,17 @@ public class DashboardServiceImp implements DashboardService{
                 user.getEmail(),
                 user.getPhoneNo()
         );
+    }
+
+    @Override
+    public void updateProfile(UpdateProfileRequest request) {
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+
+        String email=authentication.getName();
+        User user=userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found"));
+
+        user.setName(request.getName());
+        user.setPhoneNo(request.getPhoneNo());
+        userRepository.save(user);
     }
 }
