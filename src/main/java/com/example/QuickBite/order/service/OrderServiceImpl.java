@@ -1,10 +1,7 @@
 package com.example.QuickBite.order.service;
 
 import com.example.QuickBite.enums.OrderStatus;
-import com.example.QuickBite.order.dto.OrderDetailsResponseDTO;
-import com.example.QuickBite.order.dto.OrderItemResponseDTO;
-import com.example.QuickBite.order.dto.OrderResponseDTO;
-import com.example.QuickBite.order.dto.PlaceOrderRequestDTO;
+import com.example.QuickBite.order.dto.*;
 import com.example.QuickBite.order.entity.Order;
 import com.example.QuickBite.order.entity.OrderItem;
 import com.example.QuickBite.order.repository.OrderItemRepository;
@@ -107,19 +104,56 @@ public class OrderServiceImpl implements OrderService {
         }
         order.setOrderStatus(OrderStatus.CANCELLED);
 
-        Order cacellOrder = orderRepository.save(order);
-        return mapToResponseDTO(cacellOrder);
+        Order cacelledOrder = orderRepository.save(order);
+        return mapToResponseDTO(cacelledOrder);
 
     }
 
-//  Admin operations
+
+
+    //  Admin operations
     @Override
-    public OrderResponseDTO updateOrderStatus(Long id, OrderStatus status) {
-        Order order = orderRepository.findById(id)
+    public List<OrderResponseDTO> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream()
+                .map(this::mapToResponseDTO).toList();
+    }
+
+    @Override
+    public OrderDetailsResponseDTO getOrdersById(Long orderId) {
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(
                         ()-> new RuntimeException("Order Not Found!")
                 );
-        order.setOrderStatus(status);
+        List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+
+        List<OrderItemResponseDTO> itemDTOs = orderItems.stream()
+                .map(item ->
+                        OrderItemResponseDTO.builder()
+                                .id(item.getId())
+                                .quantity(item.getQuantity())
+                                .price(item.getPrice())
+                                .subtotal(item.getSubtotal())
+                                .foodName(item.getFoodItem().getName())
+                                .build()
+                ).toList();
+        return mapToOrderDetailsDTO(order,itemDTOs);
+    }
+
+    @Override
+    public List<OrderResponseDTO> getOrdersByStatus(OrderStatus status) {
+        List<Order> orders = orderRepository.findByOrderStatus(status);
+        return orders.stream()
+                .map(this::mapToResponseDTO).toList();
+    }
+
+    @Override
+    public OrderResponseDTO updateOrderStatus(Long orderId, UpdateOrderStatusRequestDTO requestDTO) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(
+                        ()-> new RuntimeException("Order Not Found!")
+                );
+        order.setOrderStatus(requestDTO.getStatus());
         Order updateOrder = orderRepository.save(order);
         return mapToResponseDTO(updateOrder);
     }

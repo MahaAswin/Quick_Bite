@@ -28,7 +28,7 @@ public class OrderController {
 
     }
 
-    @GetMapping("/my-order")
+    @GetMapping("/my-orders")
     public List<OrderResponseDTO> getUserOrders() {
         return orderService.getUserOrders();
     }
@@ -39,17 +39,10 @@ public class OrderController {
         return orderService.getOrderById(id);
     }
 
-
-
     @PutMapping("/{id}/cancel")
     public OrderResponseDTO cancelOrder(@PathVariable Long id)
     {
         return orderService.cancelOrder(id);
     }
 
-
-//    @PutMapping("/{id}/status")
-//    public OrderResponseDTO updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatus status) {
-//        return orderService.updateOrderStatus(id, status);
-//    }
 }

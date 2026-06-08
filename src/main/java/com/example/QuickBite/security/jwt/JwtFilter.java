@@ -55,10 +55,10 @@ public class JwtFilter extends OncePerRequestFilter{
         String email = jwtService.extractUserName(jwt);
         //System.out.println("Email = " + email);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-//        System.out.println(
-//                "Authorities = " +
-//                        userDetails.getAuthorities()
-//        );
+        System.out.println(
+                "Authorities = " +
+                        userDetails.getAuthorities()
+        );
 //        System.out.println(
 //                "Email = " +
 //                        userDetails.getUsername()

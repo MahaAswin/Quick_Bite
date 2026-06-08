@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class PlaceOrderRequestDTO {
-    private List<OrderResponseDTO> items;
+    private List<PlaceOrderItemDTO> items;
 }
