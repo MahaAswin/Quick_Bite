@@ -1,9 +1,12 @@
 package com.example.QuickBite.order.service;
 
 import com.example.QuickBite.enums.OrderStatus;
+import com.example.QuickBite.order.dto.OrderDetailsResponseDTO;
+import com.example.QuickBite.order.dto.OrderItemResponseDTO;
 import com.example.QuickBite.order.dto.OrderResponseDTO;
 import com.example.QuickBite.order.dto.PlaceOrderRequestDTO;
 import com.example.QuickBite.order.entity.Order;
+import com.example.QuickBite.order.entity.OrderItem;
 import com.example.QuickBite.order.repository.OrderItemRepository;
 import com.example.QuickBite.order.repository.OrderRepository;
 import com.example.QuickBite.user.entity.User;
@@ -23,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
 
-
+//    User Operations
     @Override
     public OrderResponseDTO placeOrder(PlaceOrderRequestDTO request) {
         return null;
@@ -54,16 +57,62 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDTO getOrderById(Long id) {
-        Order order = orderRepository.findById(id)
+    public OrderDetailsResponseDTO getOrderById(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(
+                        ()-> new RuntimeException("User Not Found!")
+                );
+
+        Order order = orderRepository.findByIdAndUser(id,currentUser)
                 .orElseThrow(
                         () -> new RuntimeException("Order Not Found!")
                 );
-        return mapToResponseDTO(order);
+        List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+
+        List<OrderItemResponseDTO> itemDTOs = orderItems.stream()
+                .map(item -> OrderItemResponseDTO.builder()
+                        .foodName(item.getFoodItem().getName())
+                        .quantity(item.getQuantity())
+                        .price(item.getPrice())
+                        .subtotal(item.getSubtotal())
+                        .build()
+                )
+                .toList();
+
+        return mapToOrderDetailsDTO(order,itemDTOs);
     }
 
+    @Override
+    public OrderResponseDTO cancelOrder(Long id)
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        String email = authentication.getName();
 
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(
+                        ()-> new RuntimeException("User Not Found!")
+                );
+
+        Order order = orderRepository.findByIdAndUser(id,currentUser)
+                .orElseThrow(
+                        ()-> new RuntimeException("Order Not Found!")
+                );
+
+        if(order.getOrderStatus() != OrderStatus.PENDING)
+        {
+            throw new RuntimeException("Only PENDING orders can be cancelled!");
+        }
+        order.setOrderStatus(OrderStatus.CANCELLED);
+
+        Order cacellOrder = orderRepository.save(order);
+        return mapToResponseDTO(cacellOrder);
+
+    }
+
+//  Admin operations
     @Override
     public OrderResponseDTO updateOrderStatus(Long id, OrderStatus status) {
         Order order = orderRepository.findById(id)
@@ -88,6 +137,20 @@ public class OrderServiceImpl implements OrderService {
                 .status(order.getOrderStatus())
                 .tokenNumber(order.getTokenNumber())
                 .totalAmount(order.getTotalAmount())
+                .orderTime(order.getOrderTime())
+                .build();
+    }
+
+    private OrderDetailsResponseDTO mapToOrderDetailsDTO(
+            Order order, List<OrderItemResponseDTO> items) {
+
+        return OrderDetailsResponseDTO.builder()
+                .id(order.getId())
+                .tokenNumber(order.getTokenNumber())
+                .totalAmount(order.getTotalAmount())
+                .status(order.getOrderStatus())
+                .orderTime(order.getOrderTime())
+                .items(items)
                 .build();
     }
 

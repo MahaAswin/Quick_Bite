@@ -1,6 +1,7 @@
 package com.example.QuickBite.order.controller;
 
 import com.example.QuickBite.enums.OrderStatus;
+import com.example.QuickBite.order.dto.OrderDetailsResponseDTO;
 import com.example.QuickBite.order.dto.OrderResponseDTO;
 import com.example.QuickBite.order.dto.PlaceOrderRequestDTO;
 import com.example.QuickBite.order.entity.Order;
@@ -33,14 +34,22 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderResponseDTO getOrderById(@PathVariable Long id) {
+    public OrderDetailsResponseDTO getOrderById(@PathVariable Long id) {
         System.out.println("GET ORDER BY ID HIT: " + id);
         return orderService.getOrderById(id);
     }
 
 
-    @PutMapping("/{id}/status")
-    public OrderResponseDTO updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatus status) {
-        return orderService.updateOrderStatus(id, status);
+
+    @PutMapping("/{id}/cancel")
+    public OrderResponseDTO cancelOrder(@PathVariable Long id)
+    {
+        return orderService.cancelOrder(id);
     }
+
+
+//    @PutMapping("/{id}/status")
+//    public OrderResponseDTO updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatus status) {
+//        return orderService.updateOrderStatus(id, status);
+//    }
 }

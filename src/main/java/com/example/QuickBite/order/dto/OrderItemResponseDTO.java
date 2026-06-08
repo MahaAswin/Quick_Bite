@@ -1,9 +1,11 @@
 package com.example.QuickBite.order.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class OrderItemRequestDTO {
+@Builder
+public class OrderItemResponseDTO {
     private Long id;
     private Integer quantity;
     private Double price;
