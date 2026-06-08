@@ -1,6 +1,6 @@
 package com.example.QuickBite.food.controller;
 
-import com.example.QuickBite.food.entity.FoodItem;
+import com.example.QuickBite.food.entity.FoodItems;
 import com.example.QuickBite.food.service.FoodService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,13 +31,13 @@ public class FoodControllerTest {
     private FoodController foodController;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private FoodItem foodItem;
+    private FoodItems foodItem;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(foodController).build();
 
-        foodItem = FoodItem.builder()
+        foodItem = FoodItems.builder()
                 .id(1L)
                 .name("Dosa")
                 .description("South Indian Dosa")
@@ -70,7 +70,7 @@ public class FoodControllerTest {
 
     @Test
     void testAddFood() throws Exception {
-        when(foodService.addFood(any(FoodItem.class))).thenReturn(foodItem);
+        when(foodService.addFood(any(FoodItems.class))).thenReturn(foodItem);
 
         mockMvc.perform(post("/foods")
                         .contentType(MediaType.APPLICATION_JSON)

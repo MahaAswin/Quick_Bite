@@ -1,7 +1,7 @@
 package com.example.QuickBite.food.controller;
 
 import com.example.QuickBite.food.dto.StockUpdateRequest;
-import com.example.QuickBite.food.entity.FoodItem;
+import com.example.QuickBite.food.entity.FoodItems;
 import com.example.QuickBite.food.service.FoodService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,23 +19,23 @@ public class FoodController {
     private final FoodService foodService;
 
     @GetMapping
-    public ResponseEntity<List<FoodItem>> getAllFoods() {
+    public ResponseEntity<List<FoodItems>> getAllFoods() {
         return ResponseEntity.ok(foodService.getAllFoods());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FoodItem> getFoodById(@PathVariable Long id) {
+    public ResponseEntity<FoodItems> getFoodById(@PathVariable Long id) {
         return ResponseEntity.ok(foodService.getFoodById(id));
     }
 
     @PostMapping
-    public ResponseEntity<FoodItem> addFood(@Valid @RequestBody FoodItem foodItem) {
-        FoodItem savedFoodItem = foodService.addFood(foodItem);
+    public ResponseEntity<FoodItems> addFood(@Valid @RequestBody FoodItems foodItem) {
+        FoodItems savedFoodItem = foodService.addFood(foodItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFoodItem);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FoodItem> updateFood(@PathVariable Long id, @Valid @RequestBody FoodItem foodItem) {
+    public ResponseEntity<FoodItems> updateFood(@PathVariable Long id, @Valid @RequestBody FoodItems foodItem) {
         return ResponseEntity.ok(foodService.updateFood(id, foodItem));
     }
 
@@ -46,17 +46,17 @@ public class FoodController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<FoodItem>> searchFood(@RequestParam String name) {
+    public ResponseEntity<List<FoodItems>> searchFood(@RequestParam String name) {
         return ResponseEntity.ok(foodService.searchFood(name));
     }
 
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<FoodItem>> getFoodsByCategory(@PathVariable String category) {
+    public ResponseEntity<List<FoodItems>> getFoodsByCategory(@PathVariable String category) {
         return ResponseEntity.ok(foodService.getFoodsByCategory(category));
     }
 
     @PutMapping("/{id}/stock")
-    public ResponseEntity<FoodItem> updateStock(
+    public ResponseEntity<FoodItems> updateStock(
             @PathVariable Long id,
             @RequestParam(required = false) Integer quantity,
             @RequestBody(required = false) StockUpdateRequest stockUpdateRequest) {

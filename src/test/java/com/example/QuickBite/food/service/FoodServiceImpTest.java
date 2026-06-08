@@ -1,6 +1,6 @@
 package com.example.QuickBite.food.service;
 
-import com.example.QuickBite.food.entity.FoodItem;
+import com.example.QuickBite.food.entity.FoodItems;
 import com.example.QuickBite.food.repository.FoodRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,11 +23,11 @@ public class FoodServiceImpTest {
     @InjectMocks
     private FoodServiceImp foodService;
 
-    private FoodItem foodItem;
+    private FoodItems foodItem;
 
     @BeforeEach
     void setUp() {
-        foodItem = FoodItem.builder()
+        foodItem = FoodItems.builder()
                 .id(1L)
                 .name("Dosa")
                 .description("Delicious South Indian Dosa")
@@ -41,9 +41,9 @@ public class FoodServiceImpTest {
 
     @Test
     void testAddFood_withStock() {
-        when(foodRepository.save(any(FoodItem.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(foodRepository.save(any(FoodItems.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        FoodItem result = foodService.addFood(foodItem);
+        FoodItems result = foodService.addFood(foodItem);
 
         assertNotNull(result);
         assertTrue(result.getAvailable());
@@ -53,9 +53,9 @@ public class FoodServiceImpTest {
     @Test
     void testAddFood_withZeroStock() {
         foodItem.setQuantity(0);
-        when(foodRepository.save(any(FoodItem.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(foodRepository.save(any(FoodItems.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        FoodItem result = foodService.addFood(foodItem);
+        FoodItems result = foodService.addFood(foodItem);
 
         assertNotNull(result);
         assertFalse(result.getAvailable());
@@ -64,9 +64,9 @@ public class FoodServiceImpTest {
     @Test
     void testUpdateStock_toZero() {
         when(foodRepository.findById(1L)).thenReturn(Optional.of(foodItem));
-        when(foodRepository.save(any(FoodItem.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(foodRepository.save(any(FoodItems.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        FoodItem result = foodService.updateStock(1L, 0);
+        FoodItems result = foodService.updateStock(1L, 0);
 
         assertNotNull(result);
         assertEquals(0, result.getQuantity());
@@ -78,9 +78,9 @@ public class FoodServiceImpTest {
         foodItem.setQuantity(0);
         foodItem.setAvailable(false);
         when(foodRepository.findById(1L)).thenReturn(Optional.of(foodItem));
-        when(foodRepository.save(any(FoodItem.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(foodRepository.save(any(FoodItems.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        FoodItem result = foodService.updateStock(1L, 5);
+        FoodItems result = foodService.updateStock(1L, 5);
 
         assertNotNull(result);
         assertEquals(5, result.getQuantity());

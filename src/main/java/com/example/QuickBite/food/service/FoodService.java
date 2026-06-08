@@ -1,23 +1,23 @@
 package com.example.QuickBite.food.service;
 
-import com.example.QuickBite.food.entity.FoodItem;
+import com.example.QuickBite.food.entity.FoodItems;
 import java.util.List;
 
 public interface FoodService {
 
-    FoodItem addFood(FoodItem foodItem);
+    FoodItems addFood(FoodItems foodItem);
 
-    FoodItem updateFood(Long id, FoodItem foodItem);
+    FoodItems updateFood(Long id, FoodItems foodItem);
 
     void deleteFood(Long id);
 
-    FoodItem getFoodById(Long id);
+    FoodItems getFoodById(Long id);
 
-    List<FoodItem> getAllFoods();
+    List<FoodItems> getAllFoods();
 
-    List<FoodItem> searchFood(String name);
+    List<FoodItems> searchFood(String name);
 
-    List<FoodItem> getFoodsByCategory(String category);
+    List<FoodItems> getFoodsByCategory(String category);
 
-    FoodItem updateStock(Long id, Integer quantity);
+    FoodItems updateStock(Long id, Integer quantity);
 }
