@@ -90,7 +90,6 @@ public class OrderServiceImpl implements OrderService {
             OrderItem orderItem = OrderItem.builder()
                     .order(saveOrder)
                     .foodItem(food)
-                    .id(item.getFoodItemId())
                     .quantity(item.getQuantity())
                     .price(food.getPrice())
                     .subtotal(subTotal)
@@ -99,6 +98,12 @@ public class OrderServiceImpl implements OrderService {
             orderItemRepository.save(orderItem);
 
             food.setQuantity(food.getQuantity() - item.getQuantity());
+
+            if(food.getQuantity() <= 0)
+            {
+                food.setQuantity(0);
+                food.setAvailable(false);
+            }
 
             foodRepository.save(food);
         }
