@@ -12,5 +12,8 @@ public class AdminDashboardResponse {
     private long totalUsers;
     private long totalAdmin;
     private long totalAccount;
+    private long totalOrder;
+    private long pendingOrder;
+    private long completedOrder;
 
 }

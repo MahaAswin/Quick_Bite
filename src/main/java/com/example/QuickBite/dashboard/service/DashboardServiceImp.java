@@ -4,7 +4,9 @@ import com.example.QuickBite.dashboard.dto.AdminDashboardResponse;
 import com.example.QuickBite.dashboard.dto.ProfileResponse;
 import com.example.QuickBite.dashboard.dto.UpdateProfileRequest;
 import com.example.QuickBite.dashboard.dto.UserDashboardResponse;
+import com.example.QuickBite.enums.OrderStatus;
 import com.example.QuickBite.enums.Roles;
+import com.example.QuickBite.order.repository.OrderRepository;
 import com.example.QuickBite.user.entity.User;
 import com.example.QuickBite.user.repository.UserRepository;
 import org.springframework.boot.security.autoconfigure.SecurityProperties;
@@ -16,9 +18,11 @@ import org.springframework.stereotype.Service;
 public class DashboardServiceImp implements DashboardService{
 
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
 
-    public DashboardServiceImp(UserRepository userRepository) {
+    public DashboardServiceImp(UserRepository userRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -43,7 +47,10 @@ public class DashboardServiceImp implements DashboardService{
         long totalUsers=userRepository.countByRole(Roles.USER);
         long totalAdmins=userRepository.countByRole(Roles.ADMIN);
         long totalAccount=userRepository.count();
-        return new AdminDashboardResponse(totalUsers,totalAdmins,totalAccount);
+        long totalOrder=orderRepository.count();
+        long pendingOrder=orderRepository.countByOrderStatus(OrderStatus.PENDING);
+        long completedOrder=orderRepository.countByOrderStatus(OrderStatus.COMPLETED);
+        return new AdminDashboardResponse(totalUsers,totalAdmins,totalAccount,totalOrder,pendingOrder,completedOrder);
     }
 
     public UserDashboardResponse getUserDashboard(){

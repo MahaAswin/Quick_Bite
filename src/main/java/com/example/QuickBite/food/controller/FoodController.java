@@ -83,6 +83,7 @@ public class FoodController {
         return ResponseEntity.ok(foodService.updateStock(id, finalQuantity));
     }
 
+
     // New Enhancement Endpoints
 
     @GetMapping("/admin/low-stock")
