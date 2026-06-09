@@ -1,6 +1,8 @@
 package com.example.QuickBite.order.service;
 
 import com.example.QuickBite.enums.OrderStatus;
+import com.example.QuickBite.food.entity.FoodItems;
+import com.example.QuickBite.food.repository.FoodRepository;
 import com.example.QuickBite.order.dto.*;
 import com.example.QuickBite.order.entity.Order;
 import com.example.QuickBite.order.entity.OrderItem;
@@ -13,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,11 +25,84 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
+    private final FoodRepository foodRepository;
 
 //    User Operations
     @Override
     public OrderResponseDTO placeOrder(PlaceOrderRequestDTO request) {
-        return null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(
+                        ()->new RuntimeException("User Not Found!")
+                );
+
+        double totalAmount = 0.0;
+
+        for(PlaceOrderItemDTO item : request.getItems())
+        {
+            FoodItems food = foodRepository.findById(
+                    item.getFoodItemId()
+            ).orElseThrow(
+                    () -> new RuntimeException("Food Not Found!")
+            );
+
+            if(!food.getAvailable())
+            {
+                throw new RuntimeException(
+                        food.getName() + " is not available"
+                );
+            }
+
+            if(food.getQuantity() < item.getQuantity())
+            {
+                throw new RuntimeException(
+                        "Insufficent stock for " + food.getName()
+                );
+            }
+
+            totalAmount += food.getPrice() * item.getQuantity();
+
+        }
+
+        Order order = Order.builder()
+                .tokenNumber(generateToken())
+                .totalAmount(totalAmount)
+                .orderStatus(OrderStatus.PENDING)
+                .orderTime(java.time.LocalDateTime.now())
+                .user(currentUser)
+                .build();
+
+        Order saveOrder = orderRepository.save(order);
+
+        for(PlaceOrderItemDTO item : request.getItems())
+        {
+            FoodItems food = foodRepository.findById(
+                    item.getFoodItemId()
+            ).orElseThrow(
+                    () -> new RuntimeException("Food Not Found!")
+            );
+
+            double subTotal = food.getPrice() * item.getQuantity();
+
+            OrderItem orderItem = OrderItem.builder()
+                    .order(saveOrder)
+                    .foodItem(food)
+                    .id(item.getFoodItemId())
+                    .quantity(item.getQuantity())
+                    .price(food.getPrice())
+                    .subtotal(subTotal)
+                    .build();
+
+            orderItemRepository.save(orderItem);
+
+            food.setQuantity(food.getQuantity() - item.getQuantity());
+
+            foodRepository.save(food);
+        }
+        return mapToResponseDTO(saveOrder);
     }
 
 
@@ -70,6 +146,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderItemResponseDTO> itemDTOs = orderItems.stream()
                 .map(item -> OrderItemResponseDTO.builder()
+                        .id(item.getId())
                         .foodName(item.getFoodItem().getName())
                         .quantity(item.getQuantity())
                         .price(item.getPrice())
