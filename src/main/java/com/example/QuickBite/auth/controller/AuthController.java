@@ -15,8 +15,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-    private final JwtService jwtService;
-
     @PostMapping("/register")
     public ResponseEntity<String> register(
             @RequestBody RegisterRequest request){
@@ -33,11 +31,4 @@ public class AuthController {
         return authService.login(request);
     }
 
-    @PostMapping("test")
-    public String test(){
-        String token= jwtService.generateToken("maha@gmail.com");
-        System.out.println(token);
-        Boolean valid= jwtService.isTokenValid(token,"maha@gmail.com");
-        return String.valueOf(valid);
-    }
 }
