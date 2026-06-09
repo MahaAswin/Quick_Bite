@@ -45,15 +45,20 @@ public class JwtFilter extends OncePerRequestFilter{
             return;
         }
 
-        String jwt = authHeader.substring(7);
+        String jwt = authHeader.substring(7).trim();
+
+        if(jwt.isEmpty()) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         //System.out.println("JWT = " + jwt);
         String email = jwtService.extractUserName(jwt);
         //System.out.println("Email = " + email);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-//        System.out.println(
-//                "Authorities = " +
-//                        userDetails.getAuthorities()
-//        );
+        System.out.println(
+                "Authorities = " +
+                        userDetails.getAuthorities()
+        );
 //        System.out.println(
 //                "Email = " +
 //                        userDetails.getUsername()
