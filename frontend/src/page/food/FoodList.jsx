@@ -141,7 +141,7 @@ const FoodList = () => {
             </Link>
             {isAdmin && (
               <>
-                <Link to="/foods/inventory" className="btn-cancel" style={{ textDecoration: 'none' }}>
+                <Link to="/admin/foods/inventory" className="btn-cancel" style={{ textDecoration: 'none' }}>
                   📦 Manage Stock
                 </Link>
                 <Link to="/admin/foods/add" className="btn-submit" style={{ textDecoration: 'none' }}>
@@ -186,7 +186,7 @@ const FoodList = () => {
           <div className="price-sorting-row">
             {/* Price Filter Section */}
             <form onSubmit={handlePriceFilterSubmit} className="price-filter-wrap">
-              <label>Price Range ($):</label>
+              <label>Price Range (₹):</label>
               <input
                 type="number"
                 placeholder="Min"
@@ -315,7 +315,7 @@ const FoodList = () => {
 
                     {/* 7. Price & 8. Action Buttons */}
                     <div className="food-price-action-row" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '1rem', marginTop: 'auto' }}>
-                      <span className="food-price-lbl">${food.price.toFixed(2)}</span>
+                      <span className="food-price-lbl">₹{food.price.toFixed(2)}</span>
                       
                       {isAdmin ? (
                         /* Admin Controls */
