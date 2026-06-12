@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import foodService from '../../services/foodService';
 import FoodNavbar from '../../components/food/FoodNavbar';
 import { placeOrder } from "../../services/orderService";
@@ -7,6 +7,7 @@ import '../../css/Food.css';
 
 const FoodList = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   // Admin view only when accessing via /admin/foods route
   const isAdmin = location.pathname.startsWith('/admin/foods');
 
@@ -113,6 +114,58 @@ const FoodList = () => {
     setAppliedMin('');
     setAppliedMax('');
   };  
+
+  const increaseQty = (foodId, maxQty) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [foodId]: Math.min((prev[foodId] || 1) + 1, maxQty),
+    }));
+  };
+
+  const decreaseQty = (foodId) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [foodId]: Math.max((prev[foodId] || 1) - 1, 1),
+    }));
+  };
+
+  const handlePlaceOrder = async (food) => {
+    try {
+      const qty = quantities[food.id] || 1;
+      console.log(request);
+      if (qty > food.quantity) {
+        alert("Not enough stock available");
+        return;
+      }
+
+      const request = {
+        items: [
+          {
+            foodItemId: food.id,
+            quantity: qty,
+          },
+        ],
+      };
+
+      const response = await placeOrder(request);
+
+      alert(
+        `Order placed successfully!\nToken Number: ${response.tokenNumber}`,
+      );
+
+      navigate("/user/orders/my-orders");
+    } catch (error) {
+      console.log("FULL ERROR:", error);
+
+      console.log("RESPONSE:", error.response);
+
+      console.log("DATA:", error.response?.data);
+
+      console.log("STATUS:", error.response?.status);
+
+      alert(JSON.stringify(error.response?.data));
+    }
+  };
 
   const isPriceFilterApplied = appliedMin !== '' || appliedMax !== '';
 
@@ -258,10 +311,8 @@ const FoodList = () => {
                   {/* Image Container with Badges Overlay */}
                   <div className="food-image-wrap">
                     {/* 1. Category Badge */}
-                    <span className="food-badge-category">
-                      {food.category}
-                    </span>
-                    
+                    <span className="food-badge-category">{food.category}</span>
+
                     {/* 2. Availability Badge */}
                     {isOutOfStock ? (
                       <span className="food-badge-stock badge-outofstock">
@@ -278,37 +329,67 @@ const FoodList = () => {
                     )}
 
                     {/* 3. Food Image */}
-                    <img 
-                      src={food.imageUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400'} 
-                      alt={food.name} 
+                    <img
+                      src={
+                        food.imageUrl ||
+                        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
+                      }
+                      alt={food.name}
                       className="food-card-img"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400';
+                        e.target.src =
+                          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400";
                       }}
                     />
                   </div>
-                  
+
                   {/* Details Container */}
                   <div className="food-details-wrap">
                     {/* 4. Food Name */}
-                    <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 0 0.5rem 0' }}>
+                    <h3
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        margin: "0 0 0.5rem 0",
+                      }}
+                    >
                       <span>{food.name}</span>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>ID: #{food.id}</span>
+                      <span
+                        style={{
+                          fontSize: "0.8rem",
+                          color: "var(--text-muted)",
+                        }}
+                      >
+                        ID: #{food.id}
+                      </span>
                     </h3>
 
                     {/* 5. Description */}
                     <p className="food-description">
-                      {food.description || 'Delectable Indian dish prepared with traditional ingredients.'}
+                      {food.description ||
+                        "Delectable Indian dish prepared with traditional ingredients."}
                     </p>
-                    
+
                     {/* 6. Quantity Available Section */}
-                    <div style={{ margin: '0 0 1rem 0', fontSize: '0.9rem' }}>
-                      <span style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Stock Level: </span>
-                      <span 
-                        style={{ 
-                          fontWeight: '700', 
-                          color: isOutOfStock ? 'var(--danger)' : isLowStock ? 'var(--warning)' : 'var(--success)'
+                    <div style={{ margin: "0 0 1rem 0", fontSize: "0.9rem" }}>
+                      <span
+                        style={{
+                          color: "var(--text-secondary)",
+                          fontWeight: "500",
+                        }}
+                      >
+                        Stock Level:{" "}
+                      </span>
+                      <span
+                        style={{
+                          fontWeight: "700",
+                          color: isOutOfStock
+                            ? "var(--danger)"
+                            : isLowStock
+                              ? "var(--warning)"
+                              : "var(--success)",
                         }}
                       >
                         {food.quantity} servings left
@@ -316,38 +397,81 @@ const FoodList = () => {
                     </div>
 
                     {/* 7. Price & 8. Action Buttons */}
-                    <div className="food-price-action-row" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '1rem', marginTop: 'auto' }}>
-                      <span className="food-price-lbl">₹{food.price.toFixed(2)}</span>
-                      
+                    <div
+                      className="food-price-action-row"
+                      style={{
+                        borderTop: "1px solid rgba(255, 255, 255, 0.05)",
+                        paddingTop: "1rem",
+                        marginTop: "auto",
+                      }}
+                    >
+                      <span className="food-price-lbl">
+                        ₹{food.price.toFixed(2)}
+                      </span>
+
                       {isAdmin ? (
                         /* Admin Controls */
                         <div className="action-buttons-cell">
-                          <Link 
-                            to={`/admin/foods/edit/${food.id}`} 
+                          <Link
+                            to={`/admin/foods/edit/${food.id}`}
                             className="btn-action-icon btn-action-edit"
                             title="Edit Listing Properties"
-                            style={{ width: '38px', height: '38px', fontSize: '1.05rem' }}
+                            style={{
+                              width: "38px",
+                              height: "38px",
+                              fontSize: "1.05rem",
+                            }}
                           >
                             ✏️
                           </Link>
-                          <button 
-                            onClick={() => handleDelete(food.id, food.name)} 
+                          <button
+                            onClick={() => handleDelete(food.id, food.name)}
                             className="btn-action-icon btn-action-delete"
                             title="Delete Food Listing"
-                            style={{ width: '38px', height: '38px', fontSize: '1.05rem' }}
+                            style={{
+                              width: "38px",
+                              height: "38px",
+                              fontSize: "1.05rem",
+                            }}
                           >
                             🗑️
                           </button>
                         </div>
                       ) : (
                         /* User Checkout */
-                        <button 
-                          className="btn-card-action"
-                          disabled={isOutOfStock}
-                          onClick={() => alert(`Simulated Order: Mock order submitted for 1x "${food.name}".`)}
-                        >
-                          {isOutOfStock ? 'Sold Out' : 'Order Now'}
-                        </button>
+                        <div className="order-section">
+                          <div className="qty-selector">
+                            <button
+                              type="button"
+                              className="qty-btn"
+                              onClick={() => decreaseQty(food.id)}
+                            >
+                              -
+                            </button>
+
+                            <span className="qty-value">
+                              {quantities[food.id] || 1}
+                            </span>
+
+                            <button
+                              type="button"
+                              className="qty-btn"
+                              onClick={() =>
+                                increaseQty(food.id, food.quantity)
+                              }
+                            >
+                              +
+                            </button>
+                          </div>
+
+                          <button
+                            className="btn-card-action"
+                            disabled={isOutOfStock}
+                            onClick={() => handlePlaceOrder(food)}
+                          >
+                            {isOutOfStock ? "Sold Out" : "Order Now"}
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>
