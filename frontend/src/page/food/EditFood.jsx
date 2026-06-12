@@ -11,23 +11,31 @@ function EditFood() {
   const navigate = useNavigate();
   const [form, setForm] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    try {
-      const food = foodService.getFoodById(id);
-      setForm({ name: food.name, description: food.description || '', price: food.price, category: food.category, quantity: food.quantity, imageUrl: food.imageUrl || '' });
-    } catch {
-      setError('Food item not found.');
-    }
+    foodService.getFoodById(id)
+      .then(res => {
+        const f = res.data;
+        setForm({ name: f.name, description: f.description || '', price: f.price, category: f.category, quantity: f.quantity, imageUrl: f.imageUrl || '' });
+      })
+      .catch(() => setError('Food item not found.'));
   }, [id]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.price || form.quantity === '') { setError('Name, price and quantity are required.'); return; }
-    foodService.updateFood(id, { ...form, price: parseFloat(form.price), quantity: parseInt(form.quantity) });
-    navigate('/admin/foods');
+    setLoading(true);
+    try {
+      await foodService.updateFood(id, { ...form, price: parseFloat(form.price), quantity: parseInt(form.quantity) });
+      navigate('/admin/foods');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to update food item.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (error) return (
@@ -95,7 +103,7 @@ function EditFood() {
               </div>
               <div className="form-actions-row">
                 <Link to="/admin/foods" className="btn-cancel" style={{ textDecoration: 'none' }}>Cancel</Link>
-                <button type="submit" className="btn-submit">Save Changes</button>
+                <button type="submit" className="btn-submit" disabled={loading}>{loading ? 'Saving...' : 'Save Changes'}</button>
               </div>
             </form>
           </div>

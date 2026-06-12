@@ -10,14 +10,22 @@ function AddFood() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', description: '', price: '', category: 'Breakfast', quantity: '', imageUrl: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.price || !form.quantity) { setError('Name, price and quantity are required.'); return; }
-    foodService.addFood({ ...form, price: parseFloat(form.price), quantity: parseInt(form.quantity) });
-    navigate('/admin/foods');
+    setLoading(true);
+    try {
+      await foodService.addFood({ ...form, price: parseFloat(form.price), quantity: parseInt(form.quantity) });
+      navigate('/admin/foods');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to add food item.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,7 +74,7 @@ function AddFood() {
               </div>
               <div className="form-actions-row">
                 <Link to="/admin/foods" className="btn-cancel" style={{ textDecoration: 'none' }}>Cancel</Link>
-                <button type="submit" className="btn-submit">Add Dish</button>
+                <button type="submit" className="btn-submit" disabled={loading}>{loading ? 'Adding...' : 'Add Dish'}</button>
               </div>
             </form>
           </div>

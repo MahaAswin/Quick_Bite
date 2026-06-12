@@ -42,9 +42,10 @@ const FoodList = () => {
     setDisplayedFoods(foods.slice(startIdx, endIdx));
   }, [foods, page]);
 
-  const loadFoodsData = () => {
+  const loadFoodsData = async () => {
     try {
-      let data = foodService.getAllFoods();
+      const res = await foodService.getAllFoods();
+      let data = res.data;
 
       // 1. Filter by category
       if (selectedCategory !== 'All') {
@@ -60,23 +61,16 @@ const FoodList = () => {
       // 3. Filter by Price Range
       if (appliedMin !== '') {
         const minVal = parseFloat(appliedMin);
-        if (!isNaN(minVal)) {
-          data = data.filter(f => f.price >= minVal);
-        }
+        if (!isNaN(minVal)) data = data.filter(f => f.price >= minVal);
       }
       if (appliedMax !== '') {
         const maxVal = parseFloat(appliedMax);
-        if (!isNaN(maxVal)) {
-          data = data.filter(f => f.price <= maxVal);
-        }
+        if (!isNaN(maxVal)) data = data.filter(f => f.price <= maxVal);
       }
 
       // 4. Sort by price
-      if (sortOption === 'price-asc') {
-        data.sort((a, b) => a.price - b.price);
-      } else if (sortOption === 'price-desc') {
-        data.sort((a, b) => b.price - a.price);
-      }
+      if (sortOption === 'price-asc') data.sort((a, b) => a.price - b.price);
+      else if (sortOption === 'price-desc') data.sort((a, b) => b.price - a.price);
 
       setFoods(data);
       setPage(0);
@@ -94,10 +88,14 @@ const FoodList = () => {
   };
 
   // Delete Handler
-  const handleDelete = (id, name) => {
-    if (window.confirm(`Are you sure you want to delete mock item "${name}"?`)) {
-      foodService.deleteFood(id);
-      loadFoodsData();
+  const handleDelete = async (id, name) => {
+    if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
+      try {
+        await foodService.deleteFood(id);
+        loadFoodsData();
+      } catch (err) {
+        console.error('Failed to delete food:', err);
+      }
     }
   };
 
