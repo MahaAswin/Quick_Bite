@@ -4,12 +4,9 @@ import Login from "./page/auth/Login";
 import Register from "./page/auth/Register";
 import UserDashboard from "./page/dashboard/UserDashboard";
 import AdminDashboard from "./page/dashboard/AdminDashboard";
+import Profile from "./page/dashboard/Profile";
+import UpdateProfile from "./page/dashboard/UpdateProfile";
 
-import FoodList from "./page/food/FoodList";
-import AddFood from "./page/food/AddFood";
-import EditFood from "./page/food/EditFood";
-import InventoryManagement from "./page/food/InventoryManagement";
-import InventoryHistory from "./page/food/InventoryHistory";
 
 import MyOrders from "./page/order/MyOrders";
 import OrderDetails from "./page/order/OrderDetails";
@@ -17,6 +14,10 @@ import AdminOrders from "./page/order/AdminOrders";
 import AdminOrderDetails from "./page/order/AdminOrderDetails";
 
 import "./App.css";
+import FoodList from "./page/food/FoodList";
+import AddFood from "./page/food/AddFood";
+import EditFood from "./page/food/EditFood";
+import InventoryHistory from "./page/food/InventoryHistory";
 
 function App() {
   return (
@@ -33,9 +34,9 @@ function App() {
 
         {/* Food Module Routes */}
         <Route path="/foods" element={<FoodList />} />
-        <Route path="/foods/add" element={<AddFood />} />
+        <Route path="/foods/add" element={<AddFood/>} />
         <Route path="/foods/edit/:id" element={<EditFood />} />
-        <Route path="/foods/inventory" element={<InventoryManagement />} />
+        <Route path="/foods/inventory" element={<InventoryHistory />} />
         <Route path="/foods/history" element={<InventoryHistory />} />
 
         {/* Order Moudle Routes */}
@@ -45,6 +46,9 @@ function App() {
 
         <Route path="/admin/orders" element={<AdminOrders />} />
         <Route path="/admin/orders/:id" element={<AdminOrderDetails />} />
+
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/update" element={<UpdateProfile />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />

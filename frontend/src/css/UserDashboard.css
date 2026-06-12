@@ -1,0 +1,191 @@
+.dashboard{
+    min-height:100vh;
+    background:#f4f6f9;
+    padding:30px;
+}
+
+/* Header */
+
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.dashboard-title{
+    color:#ff6b35;
+    font-size:42px;
+    font-weight:700;
+}
+
+/* Profile Button */
+
+.profile-btn{
+    background:#6f42c1;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.profile-btn:hover{
+    background:#5a32a3;
+    transform:translateY(-2px);
+}
+
+/* Welcome Card */
+
+.user-info{
+    background:white;
+    border-radius:18px;
+    padding:35px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom:30px;
+}
+
+.user-info h2{
+    font-size:36px;
+    color:#222;
+    margin-bottom:15px;
+}
+
+.dashboard-quote{
+    font-size:18px;
+    color:#666;
+    font-style:italic;
+    line-height:1.6;
+}
+
+/* Stats */
+
+/* Stats Section */
+
+.stats-container{
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    flex:1;
+    background:white;
+    border-radius:15px;
+    padding:15px;
+
+    height:140px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-4px);
+}
+
+.stat-card h3{
+    color:#666;
+    font-size:18px;
+    margin:0 0 15px 0;
+}
+
+.stat-card h1{
+    color:#ff6b35;
+    font-size:32px;
+    margin:0;
+}
+
+/* Buttons */
+
+.button-group{
+    display:flex;
+    gap:20px;
+}
+
+/* Food Menu */
+
+.food-btn{
+    background:#ff6b35;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.food-btn:hover{
+    background:#e85a2a;
+    transform:translateY(-2px);
+}
+
+/* Orders */
+
+.order-btn{
+    background:#0d6efd;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.order-btn:hover{
+    background:#0b5ed7;
+    transform:translateY(-2px);
+}
+
+/* Logout */
+
+.logout-btn{
+    background:#dc3545;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.logout-btn:hover{
+    background:#bb2d3b;
+    transform:translateY(-2px);
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    .stats-container{
+        flex-direction:column;
+    }
+
+    .button-group{
+        flex-direction:column;
+    }
+
+    .dashboard-header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .dashboard-title{
+        text-align:center;
+    }
+}
