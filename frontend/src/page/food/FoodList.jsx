@@ -130,7 +130,7 @@ const FoodList = () => {
   const handlePlaceOrder = async (food) => {
     try {
       const qty = quantities[food.id] || 1;
-      console.log(request);
+   
       if (qty > food.quantity) {
         alert("Not enough stock available");
         return;
@@ -437,7 +437,7 @@ const FoodList = () => {
                         </div>
                       ) : (
                         /* User Checkout */
-                        <div className="order-section">
+                        <div className="order-controls">
                           <div className="qty-selector">
                             <button
                               type="button"

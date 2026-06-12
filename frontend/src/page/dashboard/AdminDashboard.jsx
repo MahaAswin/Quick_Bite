@@ -90,7 +90,7 @@ function AdminDashboard() {
 
                 <button
                     className="manage-food-btn"
-                    onClick={() => navigate("/foods/admin")}
+                    onClick={() => navigate("/foods/add")}
                 >
                     Manage Foods
                 </button>
