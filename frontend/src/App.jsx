@@ -6,7 +6,9 @@ import UserDashboard from "./page/dashboard/UserDashboard";
 import AdminDashboard from "./page/dashboard/AdminDashboard";
 import Profile from "./page/dashboard/Profile";
 import UpdateProfile from "./page/dashboard/UpdateProfile";
-
+import AddFood from "./page/food/AddFood";
+import FoodList from "./page/food/FoodList";
+import EditFood from "./page/food/EditFood";
 
 import MyOrders from "./page/order/MyOrders";
 import OrderDetails from "./page/order/OrderDetails";
@@ -14,9 +16,6 @@ import AdminOrders from "./page/order/AdminOrders";
 import AdminOrderDetails from "./page/order/AdminOrderDetails";
 
 import "./App.css";
-import FoodList from "./page/food/FoodList";
-import AddFood from "./page/food/AddFood";
-import EditFood from "./page/food/EditFood";
 import InventoryHistory from "./page/food/InventoryHistory";
 
 function App() {

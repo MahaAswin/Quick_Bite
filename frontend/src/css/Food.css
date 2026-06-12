@@ -1,24 +1,24 @@
 /* Food & Inventory Management System Styles */
 :root {
   --primary-accent: #f59e0b;
-  --primary-accent-hover: #fbbf24;
-  --bg-dark: #0b0f19;
-  --card-bg: rgba(30, 41, 59, 0.45);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --info: #3b82f6;
+  --primary-accent-hover: #d97706;
+  --bg-dark: #f1f5f9;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #1e293b;
+  --text-muted: #475569;
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #2563eb;
 }
 
 /* Page Layout */
 .food-page-container {
   min-height: 100vh;
   background-color: var(--bg-dark);
-  background-image: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, rgba(11, 15, 25, 0) 50%);
+  background-image: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.06) 0%, rgba(241, 245, 249, 0) 50%);
   color: var(--text-primary);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   padding-bottom: 4rem;
@@ -32,7 +32,7 @@
 
 /* Header & Navbar */
 .food-navbar {
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
@@ -59,7 +59,7 @@
   font-size: 1.5rem;
   font-weight: 800;
   text-decoration: none;
-  color: var(--text-primary);
+  color: #0f172a;
   letter-spacing: -0.03em;
 }
 
@@ -71,10 +71,10 @@
 }
 
 .nav-link {
-  color: var(--text-secondary);
+  color: #1e293b;
   text-decoration: none;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.2s;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
@@ -94,6 +94,7 @@
   gap: 0.75rem;
   padding-left: 1rem;
   border-left: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .profile-role-badge {
@@ -155,7 +156,7 @@
   font-size: 2.25rem;
   font-weight: 800;
   margin: 0;
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #475569 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -177,13 +178,11 @@
 .form-card-centered {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border-radius: 20px;
   padding: 2.5rem;
   width: 100%;
   max-width: 650px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
   animation: fadeIn 0.4s ease-out;
 }
@@ -197,7 +196,7 @@
 .form-group label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: #1e293b;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
@@ -206,9 +205,9 @@
   padding: 0.875rem 1rem;
   font-size: 0.95rem;
   border-radius: 10px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  color: #0f172a;
   outline: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
@@ -218,7 +217,7 @@
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
   border-color: var(--primary-accent);
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
-  background: rgba(15, 23, 42, 0.85);
+  background: #ffffff;
 }
 
 .form-group input::placeholder {
@@ -249,7 +248,7 @@
   justify-content: flex-end;
   gap: 1rem;
   margin-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-color);
   padding-top: 1.5rem;
 }
 
@@ -279,9 +278,9 @@
 }
 
 .btn-cancel {
-  background: rgba(15, 23, 42, 0.5);
+  background: #f1f5f9;
   border: 1px solid var(--border-color);
-  color: var(--text-secondary);
+  color: #1e293b;
   padding: 0.75rem 1.5rem;
   font-size: 0.95rem;
   font-weight: 600;
@@ -296,9 +295,9 @@
 }
 
 .btn-cancel:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.15);
+  background: #e2e8f0;
+  color: #0f172a;
+  border-color: #cbd5e1;
 }
 
 /* Centered Table & Stats Wrapper */
@@ -319,8 +318,6 @@
 .stat-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
@@ -331,8 +328,8 @@
 
 .stat-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .stat-icon-wrap {
@@ -370,14 +367,13 @@
 .controls-container {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-radius: 16px;
   padding: 1.5rem;
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .search-category-row {
@@ -396,10 +392,10 @@
   width: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
   font-size: 0.95rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: #f8fafc;
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  color: #fff;
+  color: #0f172a;
   outline: none;
   box-sizing: border-box;
   transition: all 0.2s;
@@ -428,7 +424,7 @@
 }
 
 .category-pill {
-  background: rgba(15, 23, 42, 0.5);
+  background: #f1f5f9;
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   padding: 0.5rem 1rem;
@@ -440,8 +436,8 @@
 }
 
 .category-pill:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 .category-pill.active {
@@ -458,7 +454,7 @@
   gap: 1.5rem;
   flex-wrap: wrap;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-color);
 }
 
 .price-filter-wrap {
@@ -469,17 +465,17 @@
 
 .price-filter-wrap label {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: #1e293b;
   font-weight: 600;
 }
 
 .price-input {
   width: 80px;
   padding: 0.5rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: #f8fafc;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  color: #fff;
+  color: #0f172a;
   font-size: 0.85rem;
   outline: none;
 }
@@ -513,14 +509,14 @@
 
 .sort-label {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: #1e293b;
   font-weight: 600;
 }
 
 .btn-sort {
-  background: rgba(15, 23, 42, 0.5);
+  background: #f1f5f9;
   border: 1px solid var(--border-color);
-  color: var(--text-secondary);
+  color: #1e293b;
   padding: 0.5rem 0.875rem;
   border-radius: 8px;
   font-size: 0.85rem;
@@ -530,8 +526,8 @@
 }
 
 .btn-sort:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 .btn-sort.active {
@@ -551,27 +547,26 @@
 .food-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-radius: 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, box-shadow 0.3s;
 }
 
 .food-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(245, 158, 11, 0.3);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(245, 158, 11, 0.05);
+  border-color: #f59e0b;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(245, 158, 11, 0.15);
 }
 
 .food-image-wrap {
   position: relative;
   width: 100%;
   height: 180px;
-  background: #1e293b;
+  background: #f1f5f9;
 }
 
 .food-card-img {
@@ -589,10 +584,9 @@
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-color);
+  color: #0f172a;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
   font-size: 0.75rem;
@@ -614,21 +608,21 @@
 }
 
 .badge-instock {
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  color: #15803d;
 }
 
 .badge-lowstock {
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  color: #fbbf24;
+  background: #fef9c3;
+  border: 1px solid #fde047;
+  color: #a16207;
 }
 
 .badge-outofstock {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
 }
 
 .food-details-wrap {
@@ -642,7 +636,7 @@
   font-size: 1.2rem;
   font-weight: 700;
   margin: 0 0 0.5rem 0;
-  color: #fff;
+  color: #0f172a;
 }
 
 .food-description {
@@ -689,7 +683,7 @@
 }
 
 .btn-card-action:disabled {
-  background: rgba(255, 255, 255, 0.05);
+  background: #e2e8f0;
   color: var(--text-muted);
   cursor: not-allowed;
 }
@@ -698,11 +692,10 @@
 .admin-table-container {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .table-responsive {
@@ -717,25 +710,25 @@
 }
 
 .custom-table th {
-  background: rgba(15, 23, 42, 0.6);
+  background: #f8fafc;
   padding: 1rem 1.25rem;
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--text-secondary);
+  color: #1e293b;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border-color);
 }
 
 .custom-table td {
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
   font-size: 0.925rem;
-  color: #fff;
+  color: #0f172a;
   vertical-align: middle;
 }
 
 .custom-table tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: #f8fafc;
 }
 
 .table-img-cell {
@@ -743,7 +736,7 @@
   height: 50px;
   border-radius: 8px;
   object-fit: cover;
-  background: #1e293b;
+  background: #f1f5f9;
 }
 
 .action-buttons-cell {
@@ -760,8 +753,8 @@
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border-color);
-  background: rgba(15, 23, 42, 0.4);
-  color: var(--text-secondary);
+  background: #f1f5f9;
+  color: #1e293b;
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
@@ -794,9 +787,9 @@
 }
 
 .btn-page-step {
-  background: rgba(15, 23, 42, 0.5);
+  background: #f1f5f9;
   border: 1px solid var(--border-color);
-  color: var(--text-secondary);
+  color: #1e293b;
   width: 38px;
   height: 38px;
   border-radius: 8px;
@@ -819,9 +812,9 @@
 }
 
 .btn-page-num {
-  background: rgba(15, 23, 42, 0.5);
+  background: #f1f5f9;
   border: 1px solid var(--border-color);
-  color: var(--text-secondary);
+  color: #1e293b;
   width: 38px;
   height: 38px;
   border-radius: 8px;
@@ -859,7 +852,7 @@
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
-  color: var(--text-secondary);
+  color: #1e293b;
   padding: 0.75rem 1.25rem;
   font-size: 0.95rem;
   font-weight: 600;
@@ -869,7 +862,7 @@
 }
 
 .inventory-tab:hover {
-  color: #fff;
+  color: #0f172a;
 }
 
 .inventory-tab.active {
@@ -886,26 +879,25 @@
 }
 
 .diff-positive {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
+  background: #dcfce7;
+  color: #15803d;
 }
 
 .diff-negative {
-  background: rgba(239, 68, 68, 0.15);
-  color: #fca5a5;
+  background: #fee2e2;
+  color: #b91c1c;
 }
 
 /* Access Denied Shield */
 .access-denied-card {
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  backdrop-filter: blur(12px);
+  background: #fff;
+  border: 1px solid rgba(220, 38, 38, 0.2);
   border-radius: 20px;
   padding: 3rem 2rem;
   text-align: center;
   max-width: 500px;
   margin: 5rem auto;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 .denied-icon {
@@ -917,7 +909,7 @@
   font-size: 1.75rem;
   font-weight: 800;
   margin-bottom: 0.75rem;
-  color: #fca5a5;
+  color: #dc2626;
 }
 
 .denied-text {
@@ -940,7 +932,7 @@
 .loading-spinner {
   width: 50px;
   height: 50px;
-  border: 4px solid rgba(255, 255, 255, 0.05);
+  border: 4px solid #e2e8f0;
   border-top-color: var(--primary-accent);
   border-radius: 50%;
   animation: spin 1s infinite linear;
@@ -959,6 +951,7 @@
   border-radius: 16px;
   padding: 3rem;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .empty-state-icon {
@@ -976,6 +969,22 @@
   color: var(--text-secondary);
   margin: 0 0 1.5rem 0;
   font-size: 0.95rem;
+}
+
+/* btn-logout used for Reset Filters */
+.btn-logout {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background: #fecaca;
 }
 
 /* Animations */
