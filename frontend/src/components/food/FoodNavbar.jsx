@@ -25,7 +25,7 @@ const FoodNavbar = () => {
               <Link to="/admin/foods/add" className={`nav-link ${isActive('/admin/foods/add')}`}>
                 Add Food
               </Link>
-              <Link to="/foods/inventory" className={`nav-link ${isActive('/foods/inventory')}`}>
+              <Link to="/admin/foods/inventory" className={`nav-link ${isActive('/admin/foods/inventory')}`}>
                 Inventory
               </Link>
             </>

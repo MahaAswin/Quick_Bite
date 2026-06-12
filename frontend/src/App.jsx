@@ -38,6 +38,12 @@ function App() {
         <Route path="/foods/inventory" element={<InventoryHistory />} />
         <Route path="/foods/history" element={<InventoryHistory />} />
 
+        {/* Admin Food Module Routes */}
+        <Route path="/admin/foods" element={<FoodList />} />
+        <Route path="/admin/foods/add" element={<AddFood />} />
+        <Route path="/admin/foods/edit/:id" element={<EditFood />} />
+        <Route path="/admin/foods/inventory" element={<InventoryHistory />} />
+
         {/* Order Moudle Routes */}
         <Route path="/user/orders/my-orders" element={<MyOrders />} />
         <Route path="/user/orders/:id" element={<OrderDetails />} />
