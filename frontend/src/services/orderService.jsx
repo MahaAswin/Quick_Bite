@@ -35,3 +35,4 @@ export const getAdminOrderByStatus = async (status) => {
   const response = await api.get(`admin/orders/status/${status}`);
   return response.data;
 };
+

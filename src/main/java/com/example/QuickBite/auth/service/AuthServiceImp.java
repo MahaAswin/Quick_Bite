@@ -56,6 +56,6 @@ public class AuthServiceImp implements AuthService {
         }
 
         String token= jwtService.generateToken(user.getEmail());
-        return "Login Successful "+"Token: "+token;
+        return token;
     }
 }
