@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import foodService from '../../services/foodService';
 import FoodNavbar from '../../components/food/FoodNavbar';
+import { placeOrder } from "../../services/orderService";
 import '../../css/Food.css';
 
 const FoodList = () => {
@@ -15,6 +16,7 @@ const FoodList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOption, setSortOption] = useState('default');
+  const [quantities, setQuantities] = useState({});
   
   // Price Range States
   const [minPrice, setMinPrice] = useState('');
@@ -110,7 +112,7 @@ const FoodList = () => {
     setMaxPrice('');
     setAppliedMin('');
     setAppliedMax('');
-  };
+  };  
 
   const isPriceFilterApplied = appliedMin !== '' || appliedMax !== '';
 

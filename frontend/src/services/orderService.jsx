@@ -36,3 +36,10 @@ export const getAdminOrderByStatus = async (status) => {
   return response.data;
 };
 
+// orderService.js
+
+export const placeOrder = async (data) => {
+  const response = await api.post("/user/orders", data);
+  return response.data;
+};
+
