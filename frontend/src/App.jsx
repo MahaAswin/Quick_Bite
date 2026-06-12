@@ -3,6 +3,8 @@ import Login from "./page/auth/Login";
 import Register from "./page/auth/Register";
 import UserDashboard from "./page/dashboard/UserDashboard";
 import AdminDashboard from "./page/dashboard/AdminDashboard";
+import Profile from "./page/dashboard/Profile";
+import UpdateProfile from "./page/dashboard/UpdateProfile";
 
 
 function App(){
@@ -14,6 +16,8 @@ function App(){
             <Route path="/register" element={<Register/>}/>
             <Route path="/user/dashboard" element={<UserDashboard/>}/>
             <Route path="/admin/dashboard"element={<AdminDashboard />}/>
+            <Route path="/profile"element={<Profile/>}/>
+            <Route path="/profile/update"element={<UpdateProfile/>}/>
         </Routes>
         </BrowserRouter>
     )

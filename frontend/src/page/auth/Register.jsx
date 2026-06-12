@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../services/authService";
+import "../../css/Register.css";
 
 function Register() {
 
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -20,9 +23,12 @@ function Register() {
     const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await registerUser(formData);
-        alert("Registration Successful");
-        console.log(response.data);
+    const response = await registerUser(formData);
+
+    alert("Registration Successful");
+
+    navigate("/login");
+
     } catch (error) {
         console.log(error);
         alert("Registration Failed");
@@ -69,6 +75,13 @@ function Register() {
                 <button type="submit">Sign Up</button>
 
                 <button type="reset">Reset</button>
+
+                <p className="auth-link">
+                    Already have an account?{" "}
+                    <span onClick={() => navigate("/login")}>
+                        Login Here
+                    </span>
+                </p>
             </form>
         </div>
     );

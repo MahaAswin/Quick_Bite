@@ -2,11 +2,13 @@ package com.example.QuickBite.auth.service;
 
 import com.example.QuickBite.auth.dto.loginRequest;
 import com.example.QuickBite.auth.dto.RegisterRequest;
+import com.example.QuickBite.auth.dto.loginResponse;
 import com.example.QuickBite.enums.Roles;
 import com.example.QuickBite.security.jwt.JwtService;
 import com.example.QuickBite.user.entity.User;
 import com.example.QuickBite.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +44,7 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public String login(loginRequest request) {
+    public loginResponse login(loginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() ->
@@ -55,7 +57,11 @@ public class AuthServiceImp implements AuthService {
             throw new RuntimeException("Invalid Password");
         }
 
-        String token= jwtService.generateToken(user.getEmail());
-        return "Login Successful "+"Token: "+token;
+        String token = jwtService.generateToken(user.getEmail());
+
+        return new loginResponse(
+                token,
+                user.getRole().name()
+        );
     }
 }

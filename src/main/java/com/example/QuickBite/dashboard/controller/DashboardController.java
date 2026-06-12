@@ -31,14 +31,13 @@ public class DashboardController {
         return dashboardService.getAdminDashboard();
     }
 
-    @GetMapping("user/dashboard")
+    @GetMapping("/user/dashboard")
     public UserDashboardResponse getUserDashboard(){
         return dashboardService.getUserDashboard();
     }
 
-    @PutMapping("user/updateProfile")
-    public ResponseEntity<String> updateProfile(@Valid @RequestBody UpdateProfileRequest request){
+    @PutMapping("user/profile")
+    public void updateProfile(@Valid @RequestBody UpdateProfileRequest request){
         dashboardService.updateProfile(request);
-        return ResponseEntity.ok("User Details Updated");
     }
 }

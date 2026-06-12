@@ -39,7 +39,7 @@ public class DashboardServiceImp implements DashboardService{
         return new ProfileResponse(
                 user.getName(),
                 user.getEmail(),
-                user.getRole().name()
+                user.getPhoneNo()
         );
     }
     @Override
@@ -53,17 +53,33 @@ public class DashboardServiceImp implements DashboardService{
         return new AdminDashboardResponse(totalUsers,totalAdmins,totalAccount,totalOrder,pendingOrder,completedOrder);
     }
 
-    public UserDashboardResponse getUserDashboard(){
-        Authentication authentication=
+    @Override
+    public UserDashboardResponse getUserDashboard() {
+        Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
-        String email=authentication.getName();
-        User user =userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found"));
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("User Not Found"));
+        long totalOrders = orderRepository.countByUser(user);
+        long pendingOrders = orderRepository.countByUserAndOrderStatus(
+                        user,
+                        OrderStatus.PENDING
+                );
+        long completedOrders = orderRepository.countByUserAndOrderStatus(
+                        user,
+                        OrderStatus.COMPLETED
+                );
 
         return new UserDashboardResponse(
                 user.getName(),
                 user.getEmail(),
-                user.getPhoneNo()
+                user.getPhoneNo(),
+                0,0,0
+//                totalOrders,
+//                pendingOrders,
+//                completedOrders
         );
     }
 

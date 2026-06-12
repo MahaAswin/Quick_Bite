@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/authService";
+import "../../css/Login.css";
 
 function Login() {
 
@@ -18,26 +19,37 @@ function Login() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await loginUser(formData);
-            const token = response.data;
-            localStorage.setItem(
-                "token",
-                token
-            );
-            alert("Login Successful");
-            navigate("/user/dashboard");
-        } catch (error) {
-            console.log(error);
-            alert("Login Failed");
+
+    e.preventDefault();
+
+    try {
+
+        const response = await loginUser(formData);
+
+        localStorage.setItem(
+            "token",
+            response.data.token
+        );
+
+        if(response.data.role === "ADMIN"){
+            navigate("/admin/dashboard");
         }
-    };
+        else{
+            navigate("/user/dashboard");
+        }
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert("Login Failed");
+    }
+};
 
     return (
         <div className="login">
             <h2>QuickBite - Login</h2>
-            <form className="login-form"onSubmit={handleSubmit}>
+            <form className="login-form"onSubmit={handleSubmit} autoComplete="off">
                 <input
                     type="email"
                     name="email"
@@ -57,6 +69,13 @@ function Login() {
                 <button type="submit">
                     Login
                 </button>
+
+                <p className="auth-link">
+                    Don't have an account?{" "}
+                    <span onClick={() => navigate("/register")}>
+                        Register Here
+                    </span>
+                </p>
 
             </form>
 

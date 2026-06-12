@@ -45,6 +45,7 @@ public class JwtFilter extends OncePerRequestFilter{
             return;
         }
 
+        System.out.println("AUTH HEADER = " + authHeader);
         String jwt = authHeader.substring(7).trim();
 
         if(jwt.isEmpty()) {
