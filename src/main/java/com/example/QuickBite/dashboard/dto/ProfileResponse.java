@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class ProfileResponse {
     private String name;
     private String email;
-    private String role;
+    private String phoneNo;
 
 }

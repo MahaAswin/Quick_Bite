@@ -1,20 +1,17 @@
-import axiosInstance from '../api/axiosConfig';
+import api from "../api/axiosConfig";
 
-const dashboardService = {
-  getUserDashboard: async () => {
-    const response = await axiosInstance.get('/user/dashboard');
-    return response.data;
-  },
-
-  getAdminDashboard: async () => {
-    const response = await axiosInstance.get('/admin/dashboard');
-    return response.data;
-  },
-
-  updateProfile: async (profileData) => {
-    const response = await axiosInstance.put('/user/updateProfile', profileData);
-    return response.data;
-  }
+export const getUserDashboard = async () => {
+    return await api.get("/user/dashboard");
 };
 
-export default dashboardService;
+export const getAdminDashboard = async () => {
+    return await api.get("/admin/dashboard");
+};
+
+export const getProfile = async () => {
+    return await api.get("/user/profile");
+};
+
+export const updateProfile = async (data) => {
+    return await api.put("/user/profile", data);
+};

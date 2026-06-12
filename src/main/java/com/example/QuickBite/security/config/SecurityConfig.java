@@ -55,6 +55,9 @@ public class SecurityConfig {
                         .requestMatchers("/user/**")
                         .hasAnyRole("USER","ADMIN")
 
+                        .requestMatchers("/user/**")
+                        .permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(

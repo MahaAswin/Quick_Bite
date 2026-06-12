@@ -2,6 +2,7 @@ package com.example.QuickBite.auth.controller;
 
 import com.example.QuickBite.auth.dto.RegisterRequest;
 import com.example.QuickBite.auth.dto.loginRequest;
+import com.example.QuickBite.auth.dto.loginResponse;
 import com.example.QuickBite.auth.service.AuthService;
 import com.example.QuickBite.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(
+    public loginResponse login(
             @RequestBody loginRequest request){
-        System.out.println("REGISTER API HIT");
+
         return authService.login(request);
     }
 
