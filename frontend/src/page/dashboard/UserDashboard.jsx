@@ -98,7 +98,7 @@ function UserDashboard() {
 
                 <button
                     className="order-btn"
-                    onClick={() => navigate("/order")}
+                    onClick={() => navigate("/user/orders/my-orders")}
                 >
                     My Orders
                 </button>

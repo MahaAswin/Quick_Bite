@@ -57,6 +57,7 @@ public class AuthServiceImp implements AuthService {
             throw new RuntimeException("Invalid Password");
         }
 
+
         String token = jwtService.generateToken(user.getEmail());
 
         return new loginResponse(
