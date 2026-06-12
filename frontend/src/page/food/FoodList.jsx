@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import foodService from '../../services/foodService';
 import FoodNavbar from '../../components/food/FoodNavbar';
 import '../../css/Food.css';
 
 const FoodList = () => {
-  // Mock Role
-  const [isAdmin, setIsAdmin] = useState(() => {
-    return localStorage.getItem('quickbite_mock_role') === 'ADMIN';
-  });
+  const location = useLocation();
+  // Admin view only when accessing via /admin/foods route
+  const isAdmin = location.pathname.startsWith('/admin/foods');
 
   // States
   const [foods, setFoods] = useState([]);
@@ -31,15 +30,10 @@ const FoodList = () => {
   // Categories list
   const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Beverages', 'Desserts'];
 
-  // Listen to role changes from localStorage
-  useEffect(() => {
-    setIsAdmin(localStorage.getItem('quickbite_mock_role') === 'ADMIN');
-  }, []);
-
   // Load foods when criteria change (including price range inputs)
   useEffect(() => {
     loadFoodsData();
-  }, [selectedCategory, sortOption, searchQuery, appliedMin, appliedMax, isAdmin]);
+  }, [selectedCategory, sortOption, searchQuery, appliedMin, appliedMax]);
 
   // Handle slicing for pagination
   useEffect(() => {
@@ -137,16 +131,25 @@ const FoodList = () => {
             </p>
           </div>
           
-          {isAdmin && (
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <Link to="/foods/inventory" className="btn-cancel" style={{ textDecoration: 'none' }}>
-                📦 Manage Stock
-              </Link>
-              <Link to="/foods/add" className="btn-submit" style={{ textDecoration: 'none' }}>
-                + Add Dish
-              </Link>
-            </div>
-          )}
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <Link
+              to={isAdmin ? '/admin/dashboard' : '/user/dashboard'}
+              className="btn-cancel"
+              style={{ textDecoration: 'none' }}
+            >
+              ← Dashboard
+            </Link>
+            {isAdmin && (
+              <>
+                <Link to="/foods/inventory" className="btn-cancel" style={{ textDecoration: 'none' }}>
+                  📦 Manage Stock
+                </Link>
+                <Link to="/admin/foods/add" className="btn-submit" style={{ textDecoration: 'none' }}>
+                  + Add Dish
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Filter Controls */}
@@ -318,7 +321,7 @@ const FoodList = () => {
                         /* Admin Controls */
                         <div className="action-buttons-cell">
                           <Link 
-                            to={`/foods/edit/${food.id}`} 
+                            to={`/admin/foods/edit/${food.id}`} 
                             className="btn-action-icon btn-action-edit"
                             title="Edit Listing Properties"
                             style={{ width: '38px', height: '38px', fontSize: '1.05rem' }}

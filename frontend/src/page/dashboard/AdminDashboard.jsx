@@ -90,14 +90,14 @@ function AdminDashboard() {
 
                 <button
                     className="manage-food-btn"
-                    onClick={() => navigate("/foods")}
+                    onClick={() => navigate("/admin/foods")}
                 >
                     Manage Foods
                 </button>
 
                 <button
                     className="view-orders-btn"
-                    onClick={() => navigate("/order")}
+                    onClick={() => navigate("/admin/orders")}
                 >
                     View Orders
                 </button>
@@ -105,9 +105,8 @@ function AdminDashboard() {
                 <button
                     className="admin-logout-btn"
                     onClick={() => {
-
                         localStorage.removeItem("token");
-
+                        localStorage.removeItem("role");
                         navigate("/login");
                     }}
                 >
